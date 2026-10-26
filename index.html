@@ -6,18 +6,22 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#eceae4;--mut:#9a988f;--line:#33322e;--card:#1e1e1c;--acc:#8db8e8;--pro:#e48a8a;--disc:#777;--glass:#3d6a94}}
 :root[data-theme="dark"]{--bg:#151514;--fg:#eceae4;--mut:#9a988f;--line:#33322e;--card:#1e1e1c;--acc:#8db8e8;--pro:#e48a8a;--disc:#777;--glass:#3d6a94}
 body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,sans-serif}
-main{max-width:1500px;margin:0 auto;padding:24px 16px}
+main{max-width:none;margin:0 auto;padding:24px 16px}
 h1{font-size:22px;margin:0 0 4px}p.sub{color:var(--mut);margin:0 0 16px;max-width:950px}
 .ctl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 .cnt{color:var(--mut);font-size:13px;margin-bottom:8px}
 input,select{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:7px 10px;font:inherit}
 input{flex:1;min-width:180px}
 .wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
-table{border-collapse:collapse;width:100%;min-width:1300px}
-th,td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
-th{position:sticky;top:0;background:var(--card);cursor:pointer;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--mut);white-space:nowrap}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:5px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{position:sticky;top:0;background:var(--card);cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.02em;color:var(--mut);vertical-align:bottom}
 td.n{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
-td.th{width:120px}
+td.th{width:112px}
+@media (max-width:1500px){th:nth-child(14),td:nth-child(14){display:none}}
+@media (max-width:1380px){th:nth-child(6),td:nth-child(6),th:nth-child(13),td:nth-child(13){display:none}}
+@media (max-width:1290px){th:nth-child(10),td:nth-child(10){display:none}}
+td:nth-child(3){min-width:150px}td:nth-child(9),td:nth-child(17){max-width:130px}
 .tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid currentColor;margin-right:4px}
 .pro{color:var(--pro)}.d{color:var(--disc)}.c{color:var(--acc)}
 .br{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
