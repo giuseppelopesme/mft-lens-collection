@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MFT Lens Collection</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--mut:#6b6a66;--line:#dddbd3;--card:#fff;--acc:#1f4e79;--pro:#a33;--disc:#888;--glass:#9fc3e6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--fg:#eceae4;--mut:#9a988f;--line:#33322e;--card:#1e1e1c;--acc:#8db8e8;--pro:#e48a8a;--disc:#777;--glass:#3d6a94}}
+:root[data-theme="dark"]{--bg:#151514;--fg:#eceae4;--mut:#9a988f;--line:#33322e;--card:#1e1e1c;--acc:#8db8e8;--pro:#e48a8a;--disc:#777;--glass:#3d6a94}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,sans-serif}
+main{max-width:1500px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}p.sub{color:var(--mut);margin:0 0 16px;max-width:950px}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.cnt{color:var(--mut);font-size:13px;margin-bottom:8px}
+input,select{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:7px 10px;font:inherit}
+input{flex:1;min-width:180px}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:1300px}
+th,td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{position:sticky;top:0;background:var(--card);cursor:pointer;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--mut);white-space:nowrap}
+td.n{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+td.th{width:120px}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid currentColor;margin-right:4px}
+.pro{color:var(--pro)}.d{color:var(--disc)}.c{color:var(--acc)}
+.br{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+a{color:var(--acc)}
+.notes{color:var(--mut);font-size:13px;margin-top:16px;max-width:950px}
+</style></head><body><main>
+<h1>Micro Four Thirds lens collection for the OM-3</h1>
+<p class="sub">Every lens here mounts natively on the OM-3: OM System/Olympus, Panasonic Lumix and Leica DG, Sigma, Voigtländer, Laowa, Samyang, TTArtisan, 7Artisans, Meike, Zhongyi, Kowa, Tokina and DJI. Thumbnails are silhouettes drawn to a common scale from each lens's real diameter and length, so you can compare sizes at a glance. Sort by clicking a column header; "Photos" opens an image search for the lens.</p>
+<div class="ctl">
+<input id="q" placeholder="Filter (e.g. PRO, macro, 0.95, IP53, OIS)">
+<select id="b"><option value="">All brands</option></select>
+<select id="t"><option value="">All types</option><option>Prime</option><option>Zoom</option><option>Converter</option></select>
+<select id="f"><option value="">AF + manual</option><option value="AF">Autofocus only</option><option value="Manual">Manual only</option></select>
+<select id="s"><option value="">Current + discontinued</option><option>Current</option><option>Discontinued</option></select>
+</div>
+<div class="cnt" id="cnt"></div>
+<div class="wrap"><table id="tb"><thead><tr>
+<th data-k="dim">Size</th><th data-k="0">Brand</th><th data-k="1">Lens</th><th data-k="2">Type</th><th data-k="3">Range mm</th><th data-k="eq">FF eq. mm</th><th data-k="4">Aperture</th><th data-k="5">Focus</th><th data-k="6">Min focus / mag.</th><th data-k="7">Stabil.</th><th data-k="8">Weight g</th><th data-k="9">Weather</th><th data-k="10">Filter</th><th data-k="11">Ø × L mm</th><th data-k="12">Status</th><th data-k="13">Launch MSRP $</th><th data-k="14">Notes</th><th>Photos</th>
+</tr></thead><tbody></tbody></table></div>
+<div class="notes">
+<p><b>Weather:</b> "IP53" = formally rated (matches the OM-3 body). "Splash" = maker states dust/splash resistance without an IP number. "—" = not sealed.</p>
+<p><b>Prices and specs:</b> launch list prices in USD; street prices are usually lower and EU list prices differ. Values marked ~ are estimates, mostly for recent or budget third-party lenses. Data was compiled without live checks against each spec sheet, so verify on the maker's site before buying.</p>
+<p><b>Not included:</b> cine-only lines (Veydra, DZOFilm, Sirui anamorphics), adapted lenses (EF, OM film, Leica M via adapter) and very low-volume brands. Ask if you want those added.</p>
+</div>
+</main>
+<script>
+// brand|name|type|range|ap|focus|minfocus/mag|IS|weight|weather|filter|dia x len mm|status|msrp USD|notes
+const RAW=`
+OM System|8mm F1.8 Fisheye PRO|Prime|8|1.8|AF|0.12m / 0.2x||315|Splash|—|62x80|Current|999|Brightest AF fisheye
+OM System|7-14mm F2.8 PRO|Zoom|7-14|2.8|AF, clutch MF|0.2m / 0.11x||534|Splash|—|79x106|Current|1299|No front filters
+OM System|8-25mm F4 PRO|Zoom|8-25|4|AF, clutch MF|0.23m / 0.21x||411|IP53|72|78x88|Current|999|Collapsible UWA
+OM System|9-18mm F4-5.6|Zoom|9-18|4-5.6|AF|0.25m / 0.1x||155|—|52|57x50|Discontinued|699|Collapsible
+OM System|12-40mm F2.8 PRO II|Zoom|12-40|2.8|AF, clutch MF|0.2m / 0.3x||382|IP53|62|70x84|Current|999|Pro standard zoom
+OM System|12-45mm F4 PRO|Zoom|12-45|4|AF|0.12m / 0.5x||254|IP53|58|63x70|Current|649|Best OM-3 match
+OM System|12-100mm F4 IS PRO|Zoom|12-100|4|AF, clutch MF|0.15m / 0.3x|Sync IS|561|IP53|72|77x117|Current|1299|All-rounder
+OM System|12-50mm F3.5-6.3 EZ|Zoom|12-50|3.5-6.3|AF, power zoom|0.2m / 0.36x||212|Splash|52|57x83|Discontinued|499|Macro mode
+OM System|12-200mm F3.5-6.3|Zoom|12-200|3.5-6.3|AF|0.22m / 0.46x||455|IP53|72|78x100|Current|899|Superzoom
+OM System|14-42mm F3.5-5.6 EZ|Zoom|14-42|3.5-5.6|AF, power zoom|0.2m / 0.23x||93|—|37|61x23|Current|349|Pancake kit
+OM System|14-42mm F3.5-5.6 II R|Zoom|14-42|3.5-5.6|AF|0.25m / 0.19x||113|—|37|56x50|Discontinued|299|Kit
+OM System|14-42mm F3.5-5.6 III|Zoom|14-42|3.5-5.6|AF|0.25m||~110|—|37|56x50|Current|~399|2025 refresh
+OM System|14-150mm F4-5.6 II|Zoom|14-150|4-5.6|AF|0.5m / 0.24x||285|Splash|58|64x83|Current|599|Travel zoom
+OM System|40-150mm F2.8 PRO|Zoom|40-150|2.8|AF, clutch MF|0.7m / 0.21x||760|Splash|72|80x160|Current|1499|TC compatible
+OM System|40-150mm F4 PRO|Zoom|40-150|4|AF|0.7m / 0.16x||382|IP53|62|69x99|Current|899|Collapsible tele
+OM System|40-150mm F4-5.6 R|Zoom|40-150|4-5.6|AF|0.9m / 0.16x||190|—|58|64x83|Current|199|Budget tele
+OM System|50-200mm F2.8 IS PRO|Zoom|50-200|2.8|AF|—|Sync IS|~1245|IP53|77|~90x~200|Current|~2499|2025, TC compatible
+OM System|75-300mm F4.8-6.7 II|Zoom|75-300|4.8-6.7|AF|0.9m / 0.18x||423|—|58|70x116|Current|549|Light tele
+OM System|100-400mm F5-6.3 IS|Zoom|100-400|5-6.3|AF|1.3m / 0.57x|Sync IS|1120|IP53|72|86x206|Current|1499|TC compatible
+OM System|100-400mm F5-6.3 IS II|Zoom|100-400|5-6.3|AF|1.3m|Sync IS|~1050|IP53|72|86x206|Current|~1599|2025 revision
+OM System|150-400mm F4.5 TC1.25x IS PRO|Zoom|150-400 (500)|4.5-5.6|AF, clutch MF|1.3m / 0.57x|Sync IS|1875|IP53|95|115x315|Current|7499|Built-in 1.25x TC
+OM System|150-600mm F5-6.3 IS|Zoom|150-600|5-6.3|AF|0.56m / 0.7x|Sync IS|2065|IP53|95|110x264|Current|2999|2400mm eq. with MC-20
+OM System|300mm F4 IS PRO|Prime|300|4|AF, clutch MF|1.4m / 0.24x|Sync IS|1270|Splash|77|93x227|Current|2499|Wildlife prime
+OM System|9mm F8 Fisheye body cap|Prime|9|8|Manual|0.2m||30|—|—|56x13|Discontinued|99|Body-cap
+OM System|15mm F8 body cap|Prime|15|8|Manual|0.3m||22|—|—|56x9|Current|59|Body-cap
+OM System|12mm F2.0|Prime|12|2|AF, snap MF|0.2m / 0.08x||130|—|46|56x43|Current|799|Metal, snap focus
+OM System|17mm F1.2 PRO|Prime|17|1.2|AF, clutch MF|0.2m / 0.15x||390|Splash|62|68x87|Current|1199|Feathered bokeh
+OM System|17mm F1.8|Prime|17|1.8|AF, snap MF|0.25m / 0.08x||120|—|46|58x36|Current|499|Street classic
+OM System|17mm F1.8 II|Prime|17|1.8|AF|0.25m||~120|IP53|46|58x36|Current|~499|Sealed revision
+OM System|17mm F2.8|Prime|17|2.8|AF|0.2m||71|—|37|57x22|Discontinued|299|Pancake
+OM System|20mm F1.4 PRO|Prime|20|1.4|AF, clutch MF|0.25m / 0.11x||247|IP53|58|63x62|Current|799|Compact PRO
+OM System|25mm F1.2 PRO|Prime|25|1.2|AF, clutch MF|0.3m / 0.11x||410|Splash|62|70x87|Current|1199|Feathered bokeh
+OM System|25mm F1.8|Prime|25|1.8|AF|0.25m / 0.12x||137|—|46|58x42|Current|399|Normal
+OM System|25mm F1.8 II|Prime|25|1.8|AF|0.24m||~140|IP53|46|58x42|Current|~399|Sealed revision
+OM System|30mm F3.5 Macro|Prime|30|3.5|AF|0.095m / 1.25x||128|—|46|57x60|Current|299|1.25x macro
+OM System|45mm F1.2 PRO|Prime|45|1.2|AF, clutch MF|0.5m / 0.1x||410|Splash|62|70x84|Current|1199|Portrait
+OM System|45mm F1.8|Prime|45|1.8|AF|0.5m / 0.11x||116|—|37|56x46|Current|399|Budget portrait
+OM System|60mm F2.8 Macro|Prime|60|2.8|AF, limiter|0.19m / 1.0x||185|Splash|46|56x82|Current|499|1:1 macro
+OM System|75mm F1.8|Prime|75|1.8|AF|0.84m / 0.1x||305|—|58|64x69|Current|899|Classic portrait
+OM System|90mm F3.5 Macro IS PRO|Prime|90|3.5|AF, clutch MF|0.224m / 2.0x|Sync IS|453|IP53|62|69x136|Current|1499|2x macro
+OM System|MC-14 1.4x Teleconverter|Converter|x1.4|-1 stop|—|—||105|Splash|—|61x15|Current|349|PRO teles, 90mm
+OM System|MC-20 2x Teleconverter|Converter|x2|-2 stops|—|—||150|IP53|—|61x25|Current|429|PRO teles, 90mm
+Panasonic|Leica DG 8-18mm F2.8-4|Zoom|8-18|2.8-4|AF|0.23m / 0.12x||315|Splash|67|73x88|Current|1099|Compact UWA
+Panasonic|Leica DG 10-25mm F1.7|Zoom|10-25|1.7|AF, linear MF|0.28m / 0.1x||690|Splash|77|88x128|Current|1799|Zoom of primes
+Panasonic|Leica DG 12-60mm F2.8-4|Zoom|12-60|2.8-4|AF|0.2m / 0.3x|OIS|320|Splash|62|68x86|Current|999|Standard zoom
+Panasonic|Leica DG 25-50mm F1.7|Zoom|25-50|1.7|AF|0.28m / 0.21x||654|Splash|77|88x128|Current|1799|Portrait zoom
+Panasonic|Leica DG 50-200mm F2.8-4|Zoom|50-200|2.8-4|AF|0.75m / 0.25x|OIS|655|Splash|67|76x132|Current|1799|TC compatible
+Panasonic|Leica DG 100-400mm F4-6.3 II|Zoom|100-400|4-6.3|AF|1.3m / 0.25x|OIS|985|Splash|72|83x172|Current|1799|Wildlife zoom
+Panasonic|Leica DG 12mm F1.4|Prime|12|1.4|AF|0.2m / 0.1x||335|Splash|62|70x70|Current|1299|Astro / interiors
+Panasonic|Leica DG 9mm F1.7|Prime|9|1.7|AF|0.095m / 0.25x||130|—|52|61x51|Current|499|Compact UWA
+Panasonic|Leica DG 15mm F1.7|Prime|15|1.7|AF|0.2m / 0.1x||115|—|46|58x36|Current|599|Aperture ring
+Panasonic|Leica DG 25mm F1.4 II|Prime|25|1.4|AF|0.3m / 0.11x||200|Splash|46|63x55|Current|699|Normal
+Panasonic|Leica DG 42.5mm F1.2|Prime|42.5|1.2|AF|0.5m / 0.1x|OIS|425|—|67|74x77|Current|1599|Portrait
+Panasonic|Leica DG 45mm F2.8 Macro|Prime|45|2.8|AF|0.15m / 1.0x|OIS|225|—|46|63x63|Current|899|1:1 macro
+Panasonic|Leica DG 200mm F2.8|Prime|200|2.8|AF|1.15m / 0.2x|OIS|1245|Splash|77|88x174|Current|2999|Includes 1.4x TC
+Panasonic|Lumix G 7-14mm F4|Zoom|7-14|4|AF|0.25m / 0.08x||300|—|—|70x83|Current|1099|Classic UWA
+Panasonic|Lumix G 12-32mm F3.5-5.6|Zoom|12-32|3.5-5.6|AF|0.2m / 0.13x|OIS|70|—|37|56x24|Current|349|Pancake kit
+Panasonic|Lumix G X 12-35mm F2.8 II|Zoom|12-35|2.8|AF|0.25m / 0.17x|OIS|305|Splash|58|68x74|Current|999|Pro zoom
+Panasonic|Lumix G 12-60mm F3.5-5.6|Zoom|12-60|3.5-5.6|AF|0.2m / 0.27x|OIS|210|Splash|58|66x71|Current|499|Kit zoom
+Panasonic|Lumix G 14-140mm F3.5-5.6 II|Zoom|14-140|3.5-5.6|AF|0.3m / 0.25x|OIS|265|—|58|67x75|Current|699|Travel zoom
+Panasonic|Lumix G X 35-100mm F2.8 II|Zoom|35-100|2.8|AF|0.85m / 0.1x|OIS|360|Splash|58|68x100|Current|1099|Light pro tele
+Panasonic|Lumix G 35-100mm F4-5.6|Zoom|35-100|4-5.6|AF|0.9m / 0.11x|OIS|135|—|46|55x50|Current|399|Tiny tele
+Panasonic|Lumix G 45-150mm F4-5.6|Zoom|45-150|4-5.6|AF|0.9m / 0.17x|OIS|200|—|52|62x73|Current|299|Budget tele
+Panasonic|Lumix G 45-200mm F4-5.6 II|Zoom|45-200|4-5.6|AF|1.0m / 0.19x|OIS|370|Splash|52|70x100|Current|399|Tele
+Panasonic|Lumix G 100-300mm F4-5.6 II|Zoom|100-300|4-5.6|AF|1.5m / 0.21x|OIS|520|Splash|67|74x126|Current|649|Budget wildlife
+Panasonic|Lumix G 14mm F2.5 II|Prime|14|2.5|AF|0.18m||55|—|46|56x21|Current|399|Pancake
+Panasonic|Lumix G 20mm F1.7 II|Prime|20|1.7|AF|0.2m / 0.13x||87|—|46|63x26|Current|349|Pancake classic
+Panasonic|Lumix G 25mm F1.7|Prime|25|1.7|AF|0.25m / 0.14x||125|—|46|61x52|Current|199|Budget normal
+Panasonic|Lumix G 42.5mm F1.7|Prime|42.5|1.7|AF|0.31m / 0.2x|OIS|130|—|37|55x50|Current|399|Portrait
+Panasonic|Lumix G 30mm F2.8 Macro|Prime|30|2.8|AF|0.105m / 1.0x|OIS|180|—|46|59x64|Current|399|1:1 macro
+Panasonic|Lumix G 8mm F3.5 Fisheye|Prime|8|3.5|AF|0.1m||165|—|—|61x52|Current|799|Fisheye
+Panasonic|Lumix G X 14-42mm F3.5-5.6 PZ|Zoom|14-42|3.5-5.6|AF, power zoom|0.2m|OIS|95|—|37|61x27|Discontinued|399|Pancake PZ
+Panasonic|Leica DG 8-18mm (see above)|Zoom|—|—|—|—||—|—|—|0x0|Skip|—|
+Sigma|16mm F1.4 DC DN|Prime|16|1.4|AF|0.25m / 0.1x||405|Splash|67|73x92|Current|449|Fast wide
+Sigma|30mm F1.4 DC DN|Prime|30|1.4|AF|0.3m / 0.14x||265|—|52|65x73|Current|339|Fast normal
+Sigma|56mm F1.4 DC DN|Prime|56|1.4|AF|0.5m / 0.14x||280|Splash|55|67x60|Current|479|Portrait
+Sigma|19mm F2.8 DN Art|Prime|19|2.8|AF|0.2m||140|—|46|61x45|Discontinued|199|Budget wide
+Sigma|30mm F2.8 DN Art|Prime|30|2.8|AF|0.3m||140|—|46|61x40|Discontinued|199|Budget normal
+Sigma|60mm F2.8 DN Art|Prime|60|2.8|AF|0.5m||190|—|46|61x55|Discontinued|239|Budget portrait
+Voigtländer|Nokton 10.5mm F0.95|Prime|10.5|0.95|Manual|0.17m||585|—|72|77x82|Current|1199|Declick aperture
+Voigtländer|Nokton 17.5mm F0.95|Prime|17.5|0.95|Manual|0.15m||540|—|58|63x80|Current|1099|Close focus
+Voigtländer|Nokton 25mm F0.95 II|Prime|25|0.95|Manual|0.17m||410|—|52|58x70|Current|999|Video favourite
+Voigtländer|Nokton 29mm F0.8|Prime|29|0.8|Manual|0.37m||~700|—|62|~70x~90|Current|~1399|Fastest Nokton
+Voigtländer|Nokton 42.5mm F0.95|Prime|42.5|0.95|Manual|0.23m||571|—|58|64x75|Current|1099|Portrait
+Voigtländer|Nokton 60mm F0.95|Prime|60|0.95|Manual|0.34m||860|—|77|82x88|Current|1499|Tele portrait
+Voigtländer|Nokton 75mm F0.95|Prime|75|0.95|Manual|0.46m||~1000|—|82|~86x~95|Current|~1599|Longest Nokton
+Laowa|6mm F2 Zero-D|Prime|6|2|Manual|0.09m||188|—|62|64x56|Current|599|Rectilinear UWA
+Laowa|7.5mm F2|Prime|7.5|2|Manual|0.12m||170|—|46|50x55|Current|499|Drone-friendly
+Laowa|10mm F2 Zero-D|Prime|10|2|Manual|0.12m||125|—|46|53x41|Current|399|Tiny UWA
+Laowa|17mm F1.8|Prime|17|1.8|Manual|0.15m||160|—|46|52x45|Current|199|Compact
+Laowa|50mm F2.8 2x Macro APO|Prime|50|2.8|Manual|0.15m / 2x||240|—|49|54x80|Current|249|2x macro
+Laowa|8-16mm (none) placeholder|Zoom|—|—|—|—||—|—|—|0x0|Skip|—|
+Samyang|7.5mm F3.5 Fisheye|Prime|7.5|3.5|Manual|0.09m||197|—|—|60x51|Current|299|Fisheye
+Samyang|12mm F2.0 NCS CS|Prime|12|2|Manual|0.2m||245|—|67|73x59|Current|349|Astro bargain
+Samyang|10mm F2.8 ED AS NCS CS|Prime|10|2.8|Manual|0.25m||590|—|—|86x77|Current|499|UWA
+TTArtisan|7.5mm F2 Fisheye|Prime|7.5|2|Manual|0.125m||~250|—|—|~60x~55|Current|~149|Budget fisheye
+TTArtisan|17mm F1.4|Prime|17|1.4|Manual|0.2m||~200|—|46|~55x~45|Current|~89|Budget wide
+TTArtisan|25mm F2|Prime|25|2|Manual|0.22m||~90|—|43|~52x~30|Current|~59|Mini prime
+TTArtisan|35mm F1.4|Prime|35|1.4|Manual|0.28m||~180|—|39|~50x~40|Current|~79|Budget portrait
+TTArtisan|50mm F1.2|Prime|50|1.2|Manual|0.5m||~330|—|52|~60x~65|Current|~99|Budget portrait
+7Artisans|7.5mm F2.8 II Fisheye|Prime|7.5|2.8|Manual|0.15m||~250|—|—|~65x~60|Current|~139|Fisheye
+7Artisans|12mm F2.8|Prime|12|2.8|Manual|0.2m||~200|—|—|~60x~50|Current|~119|UWA
+7Artisans|25mm F1.8|Prime|25|1.8|Manual|0.18m||~150|—|46|~52x~45|Current|~69|Budget normal
+7Artisans|35mm F1.2|Prime|35|1.2|Manual|0.35m||~200|—|43|~50x~45|Current|~109|Fast
+7Artisans|55mm F1.4|Prime|55|1.4|Manual|0.35m||~300|—|49|~57x~55|Current|~99|Portrait
+Meike|10mm F2|Prime|10|2|Manual|0.3m||~360|—|62|~70x~60|Current|~199|UWA
+Meike|25mm F1.8|Prime|25|1.8|Manual|0.25m||~200|—|49|~55x~45|Current|~79|Budget
+Meike|25mm T2.2 Cine|Prime|25|T2.2|Manual, geared|0.3m||~400|—|—|~70x~75|Current|~399|Cine prime
+Meike|35mm F1.7|Prime|35|1.7|Manual|0.25m||~200|—|49|~55x~45|Current|~79|Budget
+Meike|85mm F1.8 AF|Prime|85|1.8|AF|0.85m||~410|—|58|~68x~85|Discontinued|~249|Rare 3rd-party AF
+Zhongyi|Speedmaster 17mm F0.95|Prime|17|0.95|Manual|0.25m||~430|—|62|~65x~70|Current|~499|Fast
+Zhongyi|Speedmaster 25mm F0.95|Prime|25|0.95|Manual|0.25m||~570|—|62|~65x~75|Current|~399|Fast
+Zhongyi|Speedmaster 35mm F0.95|Prime|35|0.95|Manual|0.35m||~500|—|55|~62x~65|Current|~449|Fast
+Zhongyi|Mitakon 20mm F2 4.5x Macro|Prime|20|2|Manual|4-4.5x||~400|—|—|~60x~100|Current|~299|Super macro
+Kowa|Prominar 8.5mm F2.8|Prime|8.5|2.8|Manual|0.2m||~400|—|86|~73x~80|Discontinued|~899|Premium MF
+Kowa|Prominar 12mm F1.8|Prime|12|1.8|Manual|0.2m||~420|—|72|~73x~80|Discontinued|~899|Premium MF
+Kowa|Prominar 25mm F1.8|Prime|25|1.8|Manual|0.25m||~345|—|55|~62x~70|Discontinued|~899|Premium MF
+Tokina|Reflex 300mm F6.3 MF Macro|Prime|300|6.3|Manual|0.8m||~300|—|55|~66x~66|Discontinued|~299|Mirror lens
+DJI|MFT 15mm F1.7 ASPH|Prime|15|1.7|AF|0.2m||~115|—|46|~56x~48|Discontinued|~499|Drone lens
+`;
+const COL={"OM System":"#1f4e79","Panasonic":"#2a8a57","Sigma":"#555","Voigtländer":"#a07a2c","Laowa":"#3a7bbf","Samyang":"#b33","TTArtisan":"#8a4fbf","7Artisans":"#c66a1a","Meike":"#7a7a3a","Zhongyi":"#2b8f8f","Kowa":"#946","Tokina":"#444","DJI":"#666"};
+const rows=RAW.trim().split('\n').map(l=>l.split('|')).filter(r=>r[12]!=='Skip');
+const num=v=>{const m=String(v).match(/[\d.]+/);return m?parseFloat(m[0]):NaN};
+rows.forEach(r=>{const [d,l]=r[11].split('x').map(num);r.d=d;r.l=l;r.dim=(d||0)*(l||0);
+ const rg=r[3].split(/[-\s]/).map(num).filter(x=>!isNaN(x));r.eq=rg.length&&r[2]!=='Converter'?(rg.length>1?rg[0]*2+'-'+rg[1]*2:rg[0]*2):'—'});
+const S=0.34;
+function thumb(r){if(!r.d||!r.l)return'';const w=Math.max(r.l*S,4),h=r.d*S,W=110,H=42,x=4,y=(H-h)/2,c=COL[r[0]]||'#666',m=Math.min(h,21*S*2.6);
+ return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${r[0]} ${r[1]} silhouette"><rect x="0" y="${(H-m)/2}" width="${x}" height="${m}" fill="#999"/><rect x="${x}" y="${y}" width="${Math.min(w,W-6)}" height="${h}" rx="2" fill="${c}"/><rect x="${x+Math.min(w,W-6)-2}" y="${y+h*.15}" width="2" height="${h*.7}" fill="var(--glass)"/></svg>`}
+const sel=document.getElementById('b');[...new Set(rows.map(r=>r[0]))].forEach(b=>sel.add(new Option(b,b)));
+const tb=document.querySelector('#tb tbody');
+function render(){const q=document.getElementById('q').value.toLowerCase(),b=sel.value,t=document.getElementById('t').value,f=document.getElementById('f').value,s=document.getElementById('s').value;
+ const v=rows.filter(r=>(!b||r[0]===b)&&(!t||r[2]===t)&&(!s||r[12]===s)&&(!f||(f==='AF'?/^AF/.test(r[5]):/^Manual/.test(r[5])))&&(!q||r.join(' ').toLowerCase().includes(q)));
+ document.getElementById('cnt').textContent=v.length+' of '+rows.length+' lenses';
+ tb.innerHTML=v.map(r=>{const pro=/PRO/.test(r[1])?'<span class="tag pro">PRO</span>':'';
+ const st=r[12]==='Current'?'<span class="tag c">Current</span>':'<span class="tag d">Discontinued</span>';
+ const url='https://www.google.com/search?tbm=isch&q='+encodeURIComponent(r[0]+' '+r[1]+' micro four thirds lens');
+ return `<tr><td class="th">${thumb(r)}</td><td><span class="br" style="background:${COL[r[0]]||'#666'}"></span>${r[0]}</td><td><b>${r[1]}</b> ${pro}</td><td>${r[2]}</td><td class="n">${r[3]}</td><td class="n">${r.eq}</td><td class="n">${r[4].startsWith('T')||r[4].startsWith('-')?r[4]:'f/'+r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]||'—'}</td><td class="n">${r[8]}</td><td>${r[9]}</td><td class="n">${r[10]}</td><td class="n">${r[11]}</td><td>${st}</td><td class="n">$${r[13]}</td><td>${r[14]||''}</td><td><a href="${url}" target="_blank" rel="noopener">Photos</a></td></tr>`}).join('')}
+const dir={};document.querySelectorAll('th[data-k]').forEach(th=>th.onclick=()=>{const k=th.dataset.k;dir[k]=!dir[k];
+ rows.sort((a,b)=>{const x=num(a[k]),y=num(b[k]);const v=(!isNaN(x)&&!isNaN(y))?x-y:String(a[k]).localeCompare(String(b[k]));return dir[k]?v:-v});render()});
+['q','t','f','s'].forEach(id=>document.getElementById(id).addEventListener('input',render));sel.addEventListener('input',render);render();
+</script></body></html>
